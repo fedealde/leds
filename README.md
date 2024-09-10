@@ -65,3 +65,27 @@ leds.c Taken at least once:100.00% of 10
 leds.c Calls executed:100.00% of 6
 leds.c Lines executed:100.00% of 23
 ```
+
+### First steps
+
+Luego de instalar los framewors utilizando los siguientes pasos:
+
+- Instalación de Ruby
+`sudo apt-get install ruby gcovr`
+- Instalación de Ceedling
+`sudo gem install ceedling`
+- Creación del repositorio de trabajo
+`git init project_name`
+- Creación del proyecto ceedling
+`ceedling new project_name`
+
+Versiones de framework:
+
+`ruby -v`
+ruby 3.0.2p107 (2021-07-07 revision 0db68f0233) [x86_64-linux-gnu]
+`ceedling version`
+>Welcome to Ceedling!
+    Ceedling:: 0.31.1
+       CMock:: 2.5.4
+       Unity:: 2.5.4
+  CException:: 1.3.3
