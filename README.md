@@ -45,13 +45,13 @@ Compiling unity.c...
 Compiling cmock.c...
 Linking test_leds.out...
 Running test_leds.out...
-Creating gcov results report(s) in 'build/artifacts/gcov'... Done in 0.568 seconds.
+Creating gcov results report(s) in 'build/artifacts/gcov'... Done in 0.562 seconds.
 
 --------------------------
 GCOV: OVERALL TEST SUMMARY
 --------------------------
-TESTED:  12
-PASSED:  12
+TESTED:  10
+PASSED:  10
 FAILED:   0
 IGNORED:  0
 
@@ -59,11 +59,11 @@ IGNORED:  0
 ---------------------------
 GCOV: CODE COVERAGE SUMMARY
 ---------------------------
-leds.c Lines executed:100.00% of 23
+leds.c Lines executed:100.00% of 27
 leds.c Branches executed:100.00% of 10
 leds.c Taken at least once:100.00% of 10
-leds.c Calls executed:100.00% of 6
-leds.c Lines executed:100.00% of 23
+leds.c Calls executed:100.00% of 7
+leds.c Lines executed:100.00% of 27
 ```
 
 ### First steps

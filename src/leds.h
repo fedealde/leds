@@ -22,15 +22,6 @@
 bool LedsIsOn(int led);
 
 /**
- * @brief Consulta si LED esta dentro de los limites  y retorna si fue exitoso
- *
- * @param led
- * @return true
- * @return false
- */
-bool LedsLimitCheck(int led);
-
-/**
  * @brief Inicializa puerto y apaga todos los LEDs, retorna si fue exitoso
  *
  * @param puerto

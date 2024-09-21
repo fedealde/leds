@@ -20,11 +20,9 @@
 6- Encender TODOS los LEDs
 7- Consultar por un LED encendido
 8- Consultar por un LED apagado
-9- Consultar por limite de parametro LED
-10- Consultar por LED por fuera de los limites
-11- Verificar creacion de puerto nulo
-12- Prueba de encendido (2 y 5) y apagado (3 y 5), dentro y fuera de limites
-(-6), chequeo final de leds encendidos (2)
+9- Verificar creacion de puerto nulo
+10- Prueba intermedia de encendido (2 y 5) y apagado (3 y 5), dentro de limites
+(1 y 16), fuera de los limites (0, -6 y 17) chequeo final de leds encendidos (2)
 */
 
 /*-----------Definiciones globales de test-----------*/
@@ -100,27 +98,7 @@ void test_consultar_por_led_encendido(void) {
 }
 
 // Consultar el estado de un LED que esta apagado
-void test_consultar_por_led_apagado(void) {
-
-  puerto_virtual = 0xFFFF;
-  TEST_ASSERT_TRUE(LedsSetOff(12));
-  TEST_ASSERT_FALSE(LedsIsOn(12));
-}
-
-// Consulta limites de parametros LED
-void test_consultar_limites_de_parametros(void) {
-
-  TEST_ASSERT_TRUE(LedsLimitCheck(16));
-  TEST_ASSERT_TRUE(LedsLimitCheck(1));
-}
-
-// Consulta por parametros LED por fuera de los limites
-void test_consultar_parametros_por_fuera_de_los_limites(void) {
-
-  TEST_ASSERT_FALSE(LedsLimitCheck(17));
-  TEST_ASSERT_FALSE(LedsLimitCheck(0));
-  TEST_ASSERT_FALSE(LedsLimitCheck(-1));
-}
+void test_consultar_por_led_apagado(void) { TEST_ASSERT_FALSE(LedsIsOn(12)); }
 
 // Prueba de puerto nulo
 void test_consulta_creacion_puerto_nulo(void) {
@@ -129,18 +107,27 @@ void test_consulta_creacion_puerto_nulo(void) {
   TEST_ASSERT_FALSE(LedsCreate(puerto_virtual_local));
 }
 
-// Prueba de encendido (2 y 5) y apagado (3 y 5), dentro y fuera de limites
-// (-6), chequeo final de leds encendidos (2)
+// Prueba intermedia de encendido (2 y 5) y apagado (3 y 5), dentro de limites
+// (1 y 16), fuera de los limites (0, -6 y 17) chequeo final de leds encendidos
+// (2)
 void test_consulta_encendido_y_apagado_dentro_y_fuera_de_limite_y_chequeo(
     void) {
 
+  TEST_ASSERT_TRUE(LedsSetOn(1));
   TEST_ASSERT_TRUE(LedsSetOn(2));
   TEST_ASSERT_TRUE(LedsSetOn(5));
+  TEST_ASSERT_TRUE(LedsSetOn(16));
   TEST_ASSERT_FALSE(LedsSetOn(-6));
+  TEST_ASSERT_FALSE(LedsSetOn(0));
+  TEST_ASSERT_FALSE(LedsSetOn(17));
 
+  TEST_ASSERT_TRUE(LedsSetOff(1));
   TEST_ASSERT_TRUE(LedsSetOff(3));
   TEST_ASSERT_TRUE(LedsSetOff(5));
+  TEST_ASSERT_TRUE(LedsSetOff(16));
   TEST_ASSERT_FALSE(LedsSetOff(-6));
+  TEST_ASSERT_FALSE(LedsSetOff(0));
+  TEST_ASSERT_FALSE(LedsSetOff(17));
 
   TEST_ASSERT_EQUAL_HEX16(1 << 1, puerto_virtual);
 }

@@ -1,6 +1,18 @@
 #include "leds.h"
 #include <stddef.h>
 
+//#define DEBUG
+
+#ifdef DEBUG
+#define ASSERT(arg)                                                            \
+  if (arg) {                                                                   \
+    while (1)                                                                  \
+      ;                                                                        \
+  }
+#else
+#define ASSERT(arg)
+#endif
+
 #define LSB 0x0001
 #define LAST_LED 16
 #define FIRST_LED 1
@@ -9,19 +21,23 @@
 #define ALL_LED_ON 0xFFFF
 
 static uint16_t *puerto;
+static bool LedsLimitCheck(int led);
 
 uint16_t LedToMask(int led) { return LSB << (led - LED_OFFSET); }
 
-bool LedsLimitCheck(int led) {
+static bool LedsLimitCheck(int led) {
 
   return ((LAST_LED >= led) && (FIRST_LED <= led));
 }
 
 bool LedsCreate(uint16_t *direccion) {
 
+  ASSERT(NULL != direccion); // Podría directamente utilizar esto, elimino el if
+                             // y retorno void
+
   if (NULL != direccion) {
     puerto = direccion;
-    *puerto = ALL_LED_OFF;
+    LedsSetAllOff();
     return true;
   } else {
     return false;
@@ -29,6 +45,8 @@ bool LedsCreate(uint16_t *direccion) {
 }
 
 bool LedsSetOn(int led) {
+
+  ASSERT(NULL != puerto);
 
   if (false != LedsLimitCheck(led)) {
     *puerto |= LedToMask(led);
@@ -40,6 +58,8 @@ bool LedsSetOn(int led) {
 
 bool LedsSetOff(int led) {
 
+  ASSERT(NULL != puerto);
+
   if (false != LedsLimitCheck(led)) {
     *puerto &= ~LedToMask(led);
     return true;
@@ -48,10 +68,18 @@ bool LedsSetOff(int led) {
   }
 }
 
-void LedsSetAllOff(void) { *puerto = ALL_LED_OFF; }
+void LedsSetAllOff(void) {
+  ASSERT(NULL != puerto);
+  *puerto = ALL_LED_OFF;
+}
 
-void LedsSetAllOn(void) { *puerto = ALL_LED_ON; }
+void LedsSetAllOn(void) {
+  ASSERT(NULL != puerto);
+  *puerto = ALL_LED_ON;
+}
 
 bool LedsIsOn(int led) {
+
+  ASSERT(NULL != puerto);
   return (LedToMask(led) == (*puerto & LedToMask(led)));
 }
